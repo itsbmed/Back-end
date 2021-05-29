@@ -25,7 +25,7 @@ DB_NAME=YOUR DATABASE NAME
 -   Init sequelize & create database :
 
 ```bash
-npx sequelize init # create sequelize folders
+npx sequelize init --force # create sequelize folders
 npx sequelize db:create # create database
 ```
 
@@ -36,6 +36,13 @@ require("dotenv").config();
 const env = process.env.NODE_ENV;
 const config = require("./settings")(env)["db"];
 module.exports = config;
+```
+
+-   Update `app/models/index.js` with following :
+
+```diff
+- const config = require(__dirname + '/../../config/db.js')[env];
++ const config = require(__dirname + "/../../config/settings.js")(env)["db"];
 ```
 
 -   Run app :
