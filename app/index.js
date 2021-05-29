@@ -7,6 +7,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 const path = require("path");
 
+// sync sequelize to create models
+const db = require("./models/index");
+db.sequelize.sync({ force: true });
 // inlcude routers
 
 // inlcude .env  variables
