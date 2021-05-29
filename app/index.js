@@ -8,15 +8,14 @@ const cors = require("cors");
 const path = require("path");
 
 // inlcude routers
-const homeRouter = require("./routes/homeRouter");
 
 // inlcude .env  variables
 require("dotenv").config("../.env");
 const env = process.env.NODE_ENV;
 const {
-    name,
-    corsOptions,
-    app: { port, debug, logger_format },
+  name,
+  corsOptions,
+  app: { port, debug, logger_format },
 } = require("../config/settings")(env);
 
 // create instance from express
@@ -33,20 +32,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-    express.static(path.join(__dirname, "./public"), { dotfiles: "allow" })
+  express.static(path.join(__dirname, "./public"), { dotfiles: "allow" })
 );
 if (debug) app.use(logger(logger_format));
 
-// registering route
-app.use("/home", homeRouter);
-
 // handle 404 error
 app.use("*", (req, res, next) => {
-    try {
-        throw createError.NotFound(); // throw an error to the catch
-    } catch (err) {
-        next(err);
-    }
+  try {
+    throw createError.NotFound(); // throw an error to the catch
+  } catch (err) {
+    next(err);
+  }
 });
 
 // error handler
