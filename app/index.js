@@ -11,14 +11,14 @@ const path = require("path");
 const db = require("./models/index");
 db.sequelize.sync();
 // inlcude routers
-
+const agentRouter = require("./routes/agentRouter");
 // inlcude .env  variables
 require("dotenv").config("../.env");
 const env = process.env.NODE_ENV;
 const {
-  name,
-  corsOptions,
-  app: { port, debug, logger_format },
+    name,
+    corsOptions,
+    app: { port, debug, logger_format },
 } = require("../config/settings")(env);
 
 // create instance from express
@@ -35,17 +35,21 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  express.static(path.join(__dirname, "./public"), { dotfiles: "allow" })
+    express.static(path.join(__dirname, "./public"), { dotfiles: "allow" })
 );
 if (debug) app.use(logger(logger_format));
 
+const api_path = "/api/v1";
+// initialeze routers
+app.use(api_path, agentRouter);
+
 // handle 404 error
 app.use("*", (req, res, next) => {
-  try {
-    throw createError.NotFound(); // throw an error to the catch
-  } catch (err) {
-    next(err);
-  }
+    try {
+        throw createError.NotFound(); // throw an error to the catch
+    } catch (err) {
+        next(err);
+    }
 });
 
 // error handler
