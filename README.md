@@ -22,6 +22,22 @@ DB_PASS=YOUR DATABASE PASSWORD
 DB_NAME=YOUR DATABASE NAME
 ```
 
+-   Init sequelize & create database :
+
+```bash
+npx sequelize init # create sequelize folders
+npx sequelize db:create # create database
+```
+
+-   Overwrite `config/db.js` with following :
+
+```js
+require("dotenv").config();
+const env = process.env.NODE_ENV;
+const config = require("./settings")(env)["db"];
+module.exports = config;
+```
+
 -   Run app :
 
 ```bash
