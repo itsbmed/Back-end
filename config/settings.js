@@ -1,7 +1,7 @@
 "use strict";
-
+const path = require("path");
 // include dotenv variables
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 // initialize common config
 const commonConfig = {
@@ -48,8 +48,6 @@ config.set(testConfig.name, testConfig);
 // set env fallback
 const fallback = "production";
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || fallback;
 
-module.exports = config.has(env.toLowerCase())
-    ? config.get(env)
-    : config.get(fallback);
+module.exports = config.has(env) ? config.get(env) : config.get(fallback);

@@ -12,8 +12,6 @@ const db = require("./models/index");
 db.sequelize.sync();
 // inlcude routers
 const agentRouter = require("./routes/agentRouter");
-// inlcude .env  variables
-require("dotenv").config("../.env");
 const env = process.env.NODE_ENV;
 const {
     name,
