@@ -20,6 +20,8 @@ DB_DIALECT=mysql
 DB_USER=YOUR DATABASE USERNAME
 DB_PASS=YOUR DATABASE PASSWORD
 DB_NAME=YOUR DATABASE NAME
+# jwt secrets 
+ACCESS_TOKEN_SECRET_KEY=a-hard-guessed-secret-key
 ```
 
 -   Init sequelize & create database :
