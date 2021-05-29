@@ -1,7 +1,7 @@
 "use strict";
-
+const path = require("path");
 // include dotenv variables
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 // initialize common config
 const commonConfig = {
