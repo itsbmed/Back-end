@@ -1,13 +1,8 @@
 // .sequelizerc
-require("dotenv").config();
-const env = process.env.NODE_ENV;
-const { dialect, host, username, password, database } =
-  require("./config/settings.js")(env)["db"];
 const path = require("path");
-const url = `${dialect}://${username}:${password}@${host}/${database}`;
 
 module.exports = {
-  url,
+  "config":path.resolve("config", "db.js"),
   "models-path": path.resolve("app", "models"),
   "seeders-path": path.resolve("app", "seeders"),
   "migrations-path": path.resolve("app", "migrations"),
