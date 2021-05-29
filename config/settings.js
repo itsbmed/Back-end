@@ -1,5 +1,8 @@
 "use strict";
 
+// include dotenv variables
+require("dotenv").config();
+
 // initialize common config
 const commonConfig = {
   corsOptions: {
@@ -9,6 +12,13 @@ const commonConfig = {
     port: parseInt(process.env.PORT) || 5000,
     debug: process.env.DEBUGGER.toLowerCase() === "true" ? true : false,
     logger_format: process.env.LOGGER_FORMAT || "combined",
+  },
+  db: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
   },
 };
 
