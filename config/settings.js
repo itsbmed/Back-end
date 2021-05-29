@@ -48,5 +48,8 @@ config.set(testConfig.name, testConfig);
 // set env fallback
 const fallback = "production";
 
-module.exports = (env) =>
-    config.has(env.toLowerCase()) ? config.get(env) : config.get(fallback);
+const env = process.env.NODE_ENV;
+
+module.exports = config.has(env.toLowerCase())
+    ? config.get(env)
+    : config.get(fallback);

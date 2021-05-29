@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const env = process.env.NODE_ENV;
-const { jwtSecrets } = require("../../config/settings")(env);
+const { jwtSecrets } = require("../../config/settings");
 
 // this function will generate an access token based on the username param and access token secret key
 const signAccessToken = async (username, rememberMe) => {

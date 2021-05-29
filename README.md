@@ -20,7 +20,7 @@ DB_DIALECT=mysql
 DB_USER=YOUR DATABASE USERNAME
 DB_PASS=YOUR DATABASE PASSWORD
 DB_NAME=YOUR DATABASE NAME
-# jwt secrets 
+# jwt secrets
 ACCESS_TOKEN_SECRET_KEY=a-hard-guessed-secret-key
 ```
 
@@ -34,8 +34,6 @@ npx sequelize db:create # create database
 -   Overwrite `config/db.js` with following :
 
 ```js
-require("dotenv").config();
-const env = process.env.NODE_ENV;
 const config = require("./settings")(env)["db"];
 module.exports = config;
 ```

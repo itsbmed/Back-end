@@ -19,7 +19,7 @@ const {
     name,
     corsOptions,
     app: { port, debug, logger_format },
-} = require("../config/settings")(env);
+} = require("../config/settings");
 
 // create instance from express
 const app = express();
