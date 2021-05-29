@@ -4,3 +4,7 @@ node_modules/*
 package-lock.json
 # ignore .env
 .env
+# ignore migrations of sequelize
+app/migrations/*
+# ignore seeders of sequelize
+app/seeders/*
