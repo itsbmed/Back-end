@@ -9,7 +9,7 @@ const path = require("path");
 
 // sync sequelize to create models
 const db = require("./models/index");
-db.sequelize.sync({ force: true });
+db.sequelize.sync();
 // inlcude routers
 
 // inlcude .env  variables
