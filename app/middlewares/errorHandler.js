@@ -5,7 +5,7 @@ module.exports = (err, req, res, next) => {
     const error = {
         message: err.message,
     };
-    error.stack = is_dev_or_test ? err.stack : null;
+    error.stack = is_dev_or_test ? err.stack : undefined;
     res.status(err.status || 500);
     res.json(error);
 };

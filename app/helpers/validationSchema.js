@@ -43,6 +43,26 @@ const agentValidator = async (credentials, selectors) => {
         throw err;
     }
 };
+
+const patientValidator = async (credentials, selectors) => {
+    try {
+        patientSchema = joi.object({
+            ipp: joi.number().min(6).required(),
+            nom: joi.string().min(2).max(10),
+            prenom: joi.string().min(2).max(10),
+            n_code: joi.number().max(20).optional().default(null),
+            n_date: joi.date().optional().default(null),
+        });
+        patientSchema = validator(patientSchema, selectors);
+        return await patientSchema.validateAsync(credentials);
+    } catch (err) {
+        if (err.isJoi) {
+            err.status = 400;
+        }
+        throw err;
+    }
+};
 module.exports = {
     agentValidator,
+    patientValidator,
 };
