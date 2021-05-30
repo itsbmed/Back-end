@@ -17,8 +17,10 @@ const signIn = async (req, res, next) => {
             throw createError.Unauthorized("username/password incorrect");
         }
         const accessToken = await signAccessToken(data.username);
+        delete agent.dataValues["password"];
         res.json({
             accessToken,
+            agent,
         });
     } catch (err) {
         next(err);
