@@ -12,7 +12,6 @@ module.exports = async (req, res, next) => {
                 username: payload.username,
             },
         });
-        console.log(agent);
         if (!agent) throw createError.Unauthorized();
         req.currentAgent = agent;
         next();
