@@ -16,10 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     }
     Agent.init(
         {
-            nom: DataTypes.STRING,
-            prenom: DataTypes.STRING,
+            firstName: DataTypes.STRING,
+            lastName: DataTypes.STRING,
             username: DataTypes.STRING,
             password: DataTypes.STRING,
+            isAdmin: DataTypes.BOOLEAN,
         },
         {
             sequelize,
