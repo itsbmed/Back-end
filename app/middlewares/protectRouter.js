@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
         let payload = await verifyAccessToken(accessToken);
         let agent = await Agent.findOne({
             where: {
-                username: payload.username,
+                userName: payload.userName,
             },
         });
         if (!agent) throw createError.Unauthorized();

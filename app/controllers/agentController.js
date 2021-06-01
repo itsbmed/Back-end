@@ -5,19 +5,19 @@ const { signAccessToken } = require("../helpers/jwt");
 
 const signIn = async (req, res, next) => {
     try {
-        let data = await agentValidator(req.body, { username: 1, password: 1 });
+        let data = await agentValidator(req.body, { userName: 1, passWord: 1 });
         let agent = await Agent.findOne({
             where: {
-                username: data.username,
+                userName: data.userName,
             },
         });
         if (!agent) {
             throw createError.NotFound("Agent not found !");
-        } else if (!agent.checkPassword(data.password)) {
+        } else if (!agent.checkPassword(data.passWord)) {
             throw createError.Unauthorized("username/password incorrect");
         }
-        const accessToken = await signAccessToken(data.username);
-        delete agent.dataValues["password"];
+        const accessToken = await signAccessToken(data.userName);
+        delete agent.dataValues["passWord"];
         res.json({
             accessToken,
             agent,

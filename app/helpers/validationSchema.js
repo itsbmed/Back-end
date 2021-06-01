@@ -25,14 +25,14 @@ const validator = (schema, selectors = {}) => {
 const agentValidator = async (credentials, selectors) => {
     try {
         agentSchema = joi.object({
-            nom: joi.string().min(2).max(10).optional(),
-            prenom: joi.string().min(2).max(10).optional(),
-            username: joi
+            firstName: joi.string().min(2).max(10).optional(),
+            lastName: joi.string().min(2).max(10).optional(),
+            userName: joi
                 .string()
                 .pattern(/[a-zA-Z0-9\-\_]{4,6}/)
                 .message("Please fill a valid username")
                 .required(),
-            password: joi.string().required().min(4).max(16),
+            passWord: joi.string().required().min(4).max(16),
         });
         agentSchema = validator(agentSchema, selectors);
         return await agentSchema.validateAsync(credentials);
@@ -48,10 +48,10 @@ const patientValidator = async (credentials, selectors) => {
     try {
         patientSchema = joi.object({
             ipp: joi.number().min(6).required(),
-            nom: joi.string().min(2).max(10),
-            prenom: joi.string().min(2).max(10),
-            n_code: joi.number().max(20).optional().default(null),
-            n_date: joi.date().optional().default(null),
+            firstName: joi.string().min(2).max(10),
+            lastName: joi.string().min(2).max(10),
+            nCode: joi.number().max(20).optional().default(null),
+            nDate: joi.date().optional().default(null),
         });
         patientSchema = validator(patientSchema, selectors);
         return await patientSchema.validateAsync(credentials);

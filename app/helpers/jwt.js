@@ -2,10 +2,10 @@ const jwt = require("jsonwebtoken");
 const { jwtSecrets } = require("../../config/settings");
 
 // this function will generate an access token based on the username param and access token secret key
-const signAccessToken = async (username, rememberMe) => {
+const signAccessToken = async (userName, rememberMe) => {
     try {
         let accessToken = await jwt.sign(
-            { username },
+            { userName },
             jwtSecrets.accessTokenSecretKey,
             {
                 expiresIn: rememberMe ? "144h" : "24h",

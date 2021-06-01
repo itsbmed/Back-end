@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
         }
-        checkPassword(password) {
-            return this.password === password;
+        checkPassword(passWord) {
+            return this.passWord === passWord;
         }
     }
     Agent.init(
         {
             firstName: DataTypes.STRING,
             lastName: DataTypes.STRING,
-            username: DataTypes.STRING,
-            password: DataTypes.STRING,
+            userName: DataTypes.STRING,
+            passWord: DataTypes.STRING,
             isAdmin: DataTypes.BOOLEAN,
         },
         {

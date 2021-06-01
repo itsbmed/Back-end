@@ -6,8 +6,8 @@ const addPatient = async (req, res, next) => {
     try {
         let data = await patientValidator(req.body, {
             ipp: 1,
-            nom: 1,
-            prenom: 1,
+            firstName: 1,
+            lastName: 1,
         });
         let patient = await Patient.findOne({
             where: {

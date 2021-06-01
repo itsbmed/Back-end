@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     Patient.init(
         {
             ipp: DataTypes.INTEGER,
-            nom: DataTypes.STRING,
-            prenom: DataTypes.STRING,
-            n_code: DataTypes.INTEGER,
-            n_date: DataTypes.DATE,
+            firstName: DataTypes.STRING,
+            lastName: DataTypes.STRING,
+            nCode: DataTypes.INTEGER,
+            nDate: DataTypes.DATE,
         },
         {
             sequelize,
