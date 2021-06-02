@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
     class Agent extends Model {
         /**
@@ -10,8 +11,21 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
         }
-        checkPassword(passWord) {
-            return this.passWord === passWord;
+       async  hashPassword() {
+            try {
+                let salt = await bcrypt.genSalt(10);
+                let hashedPassword = await bcrypt.hash(this.passWord, salt);
+                this.passWord = hashedPassword;
+            } catch (err) {
+                throw err;
+            }
+        }
+        async checkPassword(passWord) {
+            try {
+                return await bcrypt.compare(passWord, this.passWord);
+            } catch (err) {
+                throw err;
+            }
         }
     }
     Agent.init(
