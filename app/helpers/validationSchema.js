@@ -47,7 +47,7 @@ const agentValidator = async (credentials, selectors) => {
 const patientValidator = async (credentials, selectors) => {
     try {
         let patientSchema = joi.object({
-            ipp: joi.number().min(6).required(),
+            ipp: joi.number().min(1000000).required(),
             firstName: joi.string().min(2).max(10),
             lastName: joi.string().min(2).max(10),
             nCode: joi.number().max(20).optional().default(null),
