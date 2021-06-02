@@ -13,7 +13,9 @@ const signIn = async (req, res, next) => {
         });
         if (!agent) {
             throw createError.NotFound("Agent not found !");
-        } else if (!agent.checkPassword(data.passWord)) {
+        }
+        let isValidPassword = await agent.checkPassword(data.passWord);
+        if (!isValidPassword) {
             throw createError.Unauthorized("username/password incorrect");
         }
         const accessToken = await signAccessToken(data.userName);
