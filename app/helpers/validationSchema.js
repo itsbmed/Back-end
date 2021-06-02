@@ -33,6 +33,7 @@ const agentValidator = async (credentials, selectors) => {
                 .message("Please fill a valid username")
                 .required(),
             passWord: joi.string().required().min(4).max(16),
+            isAdmin: joi.boolean().default(false),
         });
         agentSchema = validator(agentSchema, selectors);
         return await agentSchema.validateAsync(credentials);
