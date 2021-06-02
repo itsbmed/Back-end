@@ -13,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
     }
     Patient.init(
         {
-            ipp: DataTypes.INTEGER,
+            ipp: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+            },
             firstName: DataTypes.STRING,
             lastName: DataTypes.STRING,
             nCode: DataTypes.INTEGER,
