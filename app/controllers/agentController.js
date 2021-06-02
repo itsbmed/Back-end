@@ -44,7 +44,9 @@ const signUp = async (req, res, next) => {
         });
         if (agent) throw createError.Conflict();
         let newAgent = Agent.build(data);
+        await newAgent.hashPassword();
         await newAgent.save();
+        newAgent.passWord = undefined;
         res.json(newAgent);
     } catch (err) {
         next(err);
