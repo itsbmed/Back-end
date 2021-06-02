@@ -62,7 +62,33 @@ const patientValidator = async (credentials, selectors) => {
         throw err;
     }
 };
+const episodeValidator = async (credentials, selectors) => {
+    try {
+        let episodeSchema = joi.object({
+            patientId: joi.number().min(6).required(),
+            type: joi.string().valid("external", "hospitalized"),
+            category: joi.string(),
+            initDate: joi.date(),
+            entryDate: joi.date(),
+            exitDate: joi.date(),
+            presentationNature: joi.string().valid("CS/SP", "RX"),
+            service: joi.string(),
+            situation: joi.string(),
+            tnErcure: joi.string(),
+            admType: joi.string().valid("urgent", "normal"),
+            tName: joi.string(),
+        });
+        episodeSchema = validator(episodeSchema, selectors);
+        return await episodeSchema.validateAsync(credentials);
+    } catch (err) {
+        if (err.isJoi) {
+            err.status = 400;
+        }
+        throw err;
+    }
+};
 module.exports = {
     agentValidator,
     patientValidator,
+    episodeValidator,
 };
