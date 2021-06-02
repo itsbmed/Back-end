@@ -4,5 +4,5 @@ const { episodeValidator } = require("../helpers/validationSchema");
 const protectRouter = require("../middlewares/protectRouter");
 
 router.use(protectRouter);
-router.post("/episodes", episodeController.createEpisode);
+router.post("/patients/:ipp/episodes", episodeController.createEpisode);
 module.exports = router;
