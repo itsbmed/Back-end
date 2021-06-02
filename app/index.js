@@ -13,6 +13,7 @@ db.sequelize.sync();
 // inlcude routers
 const agentRouter = require("./routes/agentRouter");
 const patientRouter = require("./routes/patientRouter");
+const episodeRouter = require("./routes/episodeRouter");
 const env = process.env.NODE_ENV;
 const {
     name,
@@ -42,6 +43,7 @@ const api_path = "/api/v1";
 // initialeze routers
 app.use(api_path, agentRouter);
 app.use(api_path, patientRouter);
+app.use(api_path, episodeRouter);
 
 // handle 404 error
 app.use("*", (req, res, next) => {
