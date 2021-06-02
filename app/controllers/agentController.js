@@ -26,7 +26,32 @@ const signIn = async (req, res, next) => {
         next(err);
     }
 };
+const signUp = async (req, res, next) => {
+    try {
+        let currentAgent = req.currentAgent;
+        if (!currentAgent.isAdmin) throw createError.Forbidden();
+        let data = await agentValidator(req.body, {
+            userName: 1,
+            passWord: 1,
+            firstName: 1,
+            lastName: 1,
+            isAdmin: 2,
+        });
+        let agent = await Agent.findOne({
+            where: {
+                userName: data.userName,
+            },
+        });
+        if (agent) throw createError.Conflict();
+        let newAgent = Agent.build(data);
+        await newAgent.save();
+        res.json(newAgent);
+    } catch (err) {
+        next(err);
+    }
+};
 
 module.exports = {
     signIn,
+    signUp,
 };
