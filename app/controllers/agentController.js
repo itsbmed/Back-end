@@ -55,7 +55,29 @@ const signUp = async (req, res, next) => {
     }
 };
 
+const updateAgent = async (req, res, next) => {
+    try {
+        let currentAgent = req.currentAgent;
+        if (!currentAgent.isAdmin) throw createError.Forbidden();
+        let data = await agentValidator(req.body, {
+            userName: 2,
+            passWord: 2,
+            firstName: 2,
+            lastName: 2,
+            isAdmin: 2,
+        });
+        let newData = { ...currentAgent.dataValues, ...data };
+        await currentAgent.updateAgent(newData);
+        if (data.passWord) await currentAgent.hashPassword();
+        await currentAgent.save();
+        res.json(currentAgent);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signIn,
     signUp,
+    updateAgent,
 };
