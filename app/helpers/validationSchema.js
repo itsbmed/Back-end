@@ -50,9 +50,9 @@ const patientValidator = async (credentials, selectors) => {
     try {
         let patientSchema = joi.object({
             ipp: joi.number().min(1000000).required(),
-            firstName: joi.string().min(2).max(10).trim(),
-            lastName: joi.string().min(2).max(10).trim(),
-            nCode: joi.number().max(20).optional().default(null),
+            firstName: joi.string().min(2).max(30).trim(),
+            lastName: joi.string().min(2).max(30).trim(),
+            nCode: joi.string().min(15).max(25).optional().default(null),
             nDate: joi
                 .string()
                 .regex(/^([0-9]{2})\/([0-9]{2})$/)
