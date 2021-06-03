@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     Patient.init(
         {
             ipp: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.INTEGER(100),
                 primaryKey: true,
                 autoIncrement: true,
             },
