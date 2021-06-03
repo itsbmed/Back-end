@@ -111,10 +111,39 @@ const getAgents = async (req, res, next) => {
     }
 };
 
+const updateSpecificAgent = async (req, res, next) => {
+    try {
+        let currentAgent = req.currentAgent;
+        if (!currentAgent.isAdmin) throw createError.Forbidden();
+        let params = await agentValidator(req.params, { userName: 1 });
+        let data = await agentValidator(req.body, {
+            passWord: 2,
+            firstName: 2,
+            lastName: 2,
+            isAdmin: 2,
+        });
+        let agent = await Agent.findOne({
+            where: {
+                userName: params.userName,
+            },
+        });
+        if (!agent) throw createError.NotFound("Agent not found !");
+        let newData = { ...agent.dataValues, ...data };
+        await agent.updateAgent(newData);
+        if (data.passWord) await agent.hashPassword();
+        await agent.save();
+        delete agent.dataValues["passWord"];
+        res.json(agent);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signIn,
     signUp,
     updateAgent,
     deleteAgent,
     getAgents,
+    updateSpecificAgent,
 };
