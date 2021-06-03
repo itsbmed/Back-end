@@ -30,9 +30,9 @@
         "morgan": "^1.10.0",
         "mysql2": "^2.2.5",
         "sequelize": "^6.6.2",
-        "sequelize-cli": "^6.2.0"
     },
     "devDependencies": {
+        "sequelize-cli": "^6.2.0",
         "nodemon": "^2.0.7"
     }
 }
