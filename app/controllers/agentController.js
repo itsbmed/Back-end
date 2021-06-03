@@ -60,7 +60,6 @@ const updateAgent = async (req, res, next) => {
         let currentAgent = req.currentAgent;
         if (!currentAgent.isAdmin) throw createError.Forbidden();
         let data = await agentValidator(req.body, {
-            userName: 2,
             passWord: 2,
             firstName: 2,
             lastName: 2,
