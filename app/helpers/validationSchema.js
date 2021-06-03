@@ -94,8 +94,41 @@ const episodeValidator = async (credentials, selectors) => {
         throw err;
     }
 };
+const billValidator = async (credentials, selectors) => {
+    try {
+        let billSchema = joi.object({
+            nReceipt: joi.number(),
+            nBill: joi.number(),
+            nature: joi.string().trim(),
+            episodeId: joi.number(),
+            medicament: joi.number().default(0),
+            actes: joi.number(),
+            total: joi.number().custom((value, helpers) => {
+                let state = helpers.state.ancestors[0];
+                if (
+                    value ===
+                    state.medicament + state.actes + state.prosthesis
+                ) {
+                    return value;
+                } else {
+                    return helpers.message("Please fill a valid total !");
+                }
+            }),
+            category: joi.string().uppercase().valid("PAID", "RAMED"),
+            prosthesis: joi.number().default(0),
+        });
+        billSchema = validator(billSchema, selectors);
+        return await billSchema.validateAsync(credentials);
+    } catch (err) {
+        if (err.isJoi) {
+            err.status = 400;
+        }
+        throw err;
+    }
+};
 module.exports = {
     agentValidator,
     patientValidator,
     episodeValidator,
+    billValidator,
 };
