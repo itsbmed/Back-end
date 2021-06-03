@@ -7,4 +7,9 @@ router.post("/sign-up", protectRouter, agentController.signUp);
 router.put("/agents", protectRouter, agentController.updateAgent);
 router.delete("/agents", protectRouter, agentController.deleteAgent);
 router.get("/agents", protectRouter, agentController.getAgents);
+router.put(
+    "/agents/:userName",
+    protectRouter,
+    agentController.updateSpecificAgent
+);
 module.exports = router;
