@@ -69,6 +69,7 @@ const updateAgent = async (req, res, next) => {
         await currentAgent.updateAgent(newData);
         if (data.passWord) await currentAgent.hashPassword();
         await currentAgent.save();
+        delete currentAgent.dataValues["passWord"];
         res.json(currentAgent);
     } catch (err) {
         next(err);
