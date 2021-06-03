@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
         }
-       async  hashPassword() {
+        async hashPassword() {
             try {
                 let salt = await bcrypt.genSalt(10);
                 let hashedPassword = await bcrypt.hash(this.passWord, salt);
@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
                 return await bcrypt.compare(passWord, this.passWord);
             } catch (err) {
                 throw err;
+            }
+        }
+        async updateAgent(newData) {
+            for (let data in newData) {
+                this[data] = newData[data];
             }
         }
     }
