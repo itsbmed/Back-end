@@ -97,9 +97,24 @@ const deleteAgent = async (req, res, next) => {
         next(err);
     }
 };
+
+const getAgents = async (req, res, next) => {
+    try {
+        let currentAgent = req.currentAgent;
+        if (!currentAgent.isAdmin) throw createError.Forbidden();
+        let agents = await Agent.findAll({
+            attributes: ["id", "userName", "firstName", "lastName"],
+        });
+        res.json(agents);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signIn,
     signUp,
     updateAgent,
     deleteAgent,
+    getAgents,
 };
