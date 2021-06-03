@@ -55,22 +55,23 @@ const signUp = async (req, res, next) => {
     }
 };
 
-const deleteAgent = async (req, res, next) => {
+const deleteSpecifcAgent = async (req, res, next) => {
     try {
         let currentAgent = req.currentAgent;
         if (!currentAgent.isAdmin) throw createError.Forbidden();
-        let data = await agentValidator(req.body, { userName: 1 });
-        if (currentAgent.userName === data.userName) {
-            await currentAgent();
+        let params = await agentValidator(req.params, { userName: 1 });
+        let agent;
+        if (currentAgent.userName === params.userName) {
+            agent = currentAgent;
         } else {
-            let agent = await Agent.findOne({
+            agent = await Agent.findOne({
                 where: {
-                    userName: data.userName,
+                    userName: params.userName,
                 },
             });
-            if (!agent) throw createError.NotFound("Agent not found !");
-            await agent.destroy();
         }
+        if (!agent) throw createError.NotFound("Agent not found !");
+        await agent.destroy();
         res.status(204).end();
     } catch (err) {
         next(err);
@@ -126,8 +127,7 @@ const updateSpecificAgent = async (req, res, next) => {
 module.exports = {
     signIn,
     signUp,
-    updateAgent,
-    deleteAgent,
+    deleteSpecifcAgent,
     getAgents,
     updateSpecificAgent,
 };
