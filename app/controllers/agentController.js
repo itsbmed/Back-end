@@ -83,7 +83,7 @@ const getAgents = async (req, res, next) => {
         let currentAgent = req.currentAgent;
         if (!currentAgent.isAdmin) throw createError.Forbidden();
         let agents = await Agent.findAll({
-            attributes: ["id", "userName", "firstName", "lastName"],
+            attributes: { exclude: ["passWord"] },
         });
         res.json(agents);
     } catch (err) {
