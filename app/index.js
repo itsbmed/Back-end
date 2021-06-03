@@ -6,10 +6,21 @@ const logger = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 const path = require("path");
+const createAgentAdmin = require("./helpers/createAgentAdmin");
 
 // sync sequelize to create models
 const db = require("./models/index");
 db.sequelize.sync();
+// create agent admin
+(async () => {
+    await createAgentAdmin({
+        userName: process.env.ADMIN_USERNAME || "admin",
+        passWord: process.env.ADMIN_PASSWORD || "admin",
+        firstName: process.env.ADMIN_FIRSTNAME || "Admin",
+        lastName: process.env.ADMIN_LASTNAME || "Admin",
+        isAdmin: true,
+    });
+})();
 // inlcude routers
 const agentRouter = require("./routes/agentRouter");
 const patientRouter = require("./routes/patientRouter");
