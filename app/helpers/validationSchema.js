@@ -53,7 +53,12 @@ const patientValidator = async (credentials, selectors) => {
             firstName: joi.string().min(2).max(10).trim(),
             lastName: joi.string().min(2).max(10).trim(),
             nCode: joi.number().max(20).optional().default(null),
-            nDate: joi.date().optional().default(null),
+            nDate: joi
+                .string()
+                .regex(/^([0-9]{2})\/([0-9]{2})$/)
+                .message("Please fill a valid nDate")
+                .optional()
+                .default(null),
         });
         patientSchema = validator(patientSchema, selectors);
         return await patientSchema.validateAsync(credentials);
