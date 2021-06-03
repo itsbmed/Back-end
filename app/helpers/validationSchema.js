@@ -73,16 +73,16 @@ const episodeValidator = async (credentials, selectors) => {
     try {
         let episodeSchema = joi.object({
             patientId: joi.number().min(6).required(),
-            type: joi.string().valid("external", "hospitalized"),
+            type: joi.string().uppercase().valid("EXTERNAL", "HOSPITALIZED"),
             category: joi.string(),
             initDate: joi.date(),
             entryDate: joi.date(),
             exitDate: joi.date(),
-            presentationNature: joi.string().valid("CS/SP", "RX"),
+            presentationNature: joi.string().uppercase().valid("CS/SP", "RX"),
             service: joi.string(),
             situation: joi.string(),
             tnErcure: joi.string(),
-            admType: joi.string().valid("urgent", "normal"),
+            admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
             tName: joi.string(),
         });
         episodeSchema = validator(episodeSchema, selectors);
