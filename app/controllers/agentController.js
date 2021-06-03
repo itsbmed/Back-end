@@ -122,11 +122,16 @@ const updateSpecificAgent = async (req, res, next) => {
             lastName: 2,
             isAdmin: 2,
         });
-        let agent = await Agent.findOne({
-            where: {
-                userName: params.userName,
-            },
-        });
+        let agent;
+        if (currentAgent.userName === data.userName) {
+            agent = currentAgent;
+        } else {
+            agent = await Agent.findOne({
+                where: {
+                    userName: params.userName,
+                },
+            });
+        }
         if (!agent) throw createError.NotFound("Agent not found !");
         let newData = { ...agent.dataValues, ...data };
         await agent.updateAgent(newData);
