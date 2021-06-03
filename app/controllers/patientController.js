@@ -22,6 +22,23 @@ const addPatient = async (req, res, next) => {
         next(err);
     }
 };
+
+const getPatient = async (req, res, next) => {
+    try {
+        let params = await patientValidator(req.params, { ipp: 1 });
+        let patient = await Patient.findOne({
+            where: {
+                ipp: params.ipp,
+            },
+        });
+        if (!patient) throw createError.NotFound("Patient not found !");
+        res.json(patient);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     addPatient,
+    getPatient,
 };
