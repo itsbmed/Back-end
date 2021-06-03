@@ -8,6 +8,8 @@ const addPatient = async (req, res, next) => {
             ipp: 1,
             firstName: 1,
             lastName: 1,
+            nCode: 2,
+            nDate: 2,
         });
         let patient = await Patient.findOne({
             where: {
