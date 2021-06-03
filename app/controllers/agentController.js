@@ -76,8 +76,30 @@ const updateAgent = async (req, res, next) => {
     }
 };
 
+const deleteAgent = async (req, res, next) => {
+    try {
+        let currentAgent = req.currentAgent;
+        if (!currentAgent.isAdmin) throw createError.Forbidden();
+        let data = await agentValidator(req.body, { userName: 1 });
+        if (currentAgent.userName === data.userName) {
+            await currentAgent();
+        } else {
+            let agent = await Agent.findOne({
+                where: {
+                    userName: data.userName,
+                },
+            });
+            if (!agent) throw createError.NotFound("Agent not found !");
+            await agent.destroy();
+        }
+        res.status(204).end();
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     signIn,
     signUp,
     updateAgent,
+    deleteAgent,
 };
