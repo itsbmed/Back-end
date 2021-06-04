@@ -50,6 +50,34 @@ const createEpisode = async (req, res, next) => {
     }
 };
 
+const getEpisodes = async (req, res, next) => {
+    try {
+        let params = await patientValidator(req.params, { ipp: 1 });
+        let query = req.query;
+        let where = {
+            patientId: params.ipp,
+        };
+        if (query.type) {
+            query = await episodeValidator(req.query, { type: 1 });
+            where.type = query.type;
+        }
+        let episodes = await Episode.findAll({
+            where,
+            attributes: {
+                exclude: ["patientId"],
+            },
+            include: {
+                model: Patient,
+                as: "patient",
+            },
+        });
+        res.json(episodes);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     createEpisode,
+    getEpisodes,
 };
