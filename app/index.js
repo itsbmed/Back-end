@@ -9,7 +9,7 @@ const path = require("path");
 const createAgentAdmin = require("./helpers/createAgentAdmin");
 
 // sync sequelize to create models
-const db = require("./models/index");
+const { db } = require("./models/index");
 db.sequelize.sync();
 // create agent admin
 (async () => {
