@@ -5,4 +5,5 @@ const protectRouter = require("../middlewares/protectRouter");
 
 router.use(protectRouter);
 router.post("/patients/:ipp/episodes", episodeController.createEpisode);
+router.get("/patients/:ipp/episodes", episodeController.getEpisodes);
 module.exports = router;
