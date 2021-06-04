@@ -1,5 +1,5 @@
 "use strict";
-const { Model, Deferrable } = require("sequelize");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     class Episode extends Model {
         /**
