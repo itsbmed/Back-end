@@ -13,16 +13,22 @@ const createEpisode = async (req, res, next) => {
         if (req.body.type === "hospitalized") {
             data = await episodeValidator(req.body, {
                 type: 1,
+                admType: 1,
                 initDate: 1,
                 entryDate: 1,
                 service: 1,
                 category: 1,
+                exitDate: 2,
+                situation: 2,
+                tnErcure: 2,
+                tName: 2,
             });
         } else if (req.body.type === "external") {
             data = await episodeValidator(req.body, {
                 type: 1,
                 presentationNature: 1,
                 initDate: 1,
+                admType: 1,
             });
         } else {
             throw createError.BadRequest();
