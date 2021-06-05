@@ -49,10 +49,15 @@ const agentValidator = async (credentials, selectors) => {
 const patientValidator = async (credentials, selectors) => {
     try {
         let patientSchema = joi.object({
-            ipp: joi.number().min(1000000).required(),
+            ipp: joi.number().min(100000).required(),
             firstName: joi.string().min(2).max(30).trim(),
             lastName: joi.string().min(2).max(30).trim(),
-            nCode: joi.string().min(15).max(25).optional().default(null),
+            nCode: joi
+                .string()
+                .regex(/^[0-9]{15,25}$/)
+                .message("Please fill a valid nCode")
+                .optional()
+                .default(null),
             nDate: joi
                 .string()
                 .regex(/^([0-9]{2})\/([0-9]{2})$/)
@@ -72,14 +77,17 @@ const patientValidator = async (credentials, selectors) => {
 const episodeValidator = async (credentials, selectors) => {
     try {
         let episodeSchema = joi.object({
-            patientId: joi.number().min(6).required(),
+            patientId: joi.number().min(100000).required(),
             type: joi.string().uppercase().valid("EXTERNAL", "HOSPITALIZED"),
-            category: joi.string(),
+            category: joi.string().uppercase().valid("P,P", "RAMED", "MAFAR"),
             initDate: joi.date(),
             entryDate: joi.date(),
             exitDate: joi.date(),
             presentationNature: joi.string().uppercase().valid("CS/SP", "RX"),
-            service: joi.string(),
+            service: joi
+                .string()
+                .uppercase()
+                .valid("P1", "P2", "P3", "P4", "CH-A", "CH-B", "CH-C", "CH-D"),
             situation: joi.string(),
             tnErcure: joi.string(),
             admType: joi.string().uppercase().valid("URGENT", "NORMAL"),

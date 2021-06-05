@@ -26,7 +26,16 @@ module.exports = (sequelize, DataTypes) => {
             entryDate: DataTypes.DATE,
             exitDate: DataTypes.DATE,
             presentationNature: DataTypes.ENUM("CS/SP", "RX"),
-            service: DataTypes.STRING,
+            service: DataTypes.ENUM(
+                "P1",
+                "P2",
+                "P3",
+                "P4",
+                "CH-A",
+                "CH-B",
+                "CH-C",
+                "CH-D"
+            ),
             situation: DataTypes.STRING,
             tnErcure: DataTypes.STRING,
             admType: DataTypes.ENUM("urgent", "normal"),
