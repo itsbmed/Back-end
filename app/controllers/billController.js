@@ -9,10 +9,10 @@ const addBill = async (req, res, next) => {
         let data = await billValidator(req.body, {
             nReceipt: 1,
             nBill: 1,
-            nature: 1,
             actes: 1,
             total: 1,
-            category: 1,
+            nature: 2,
+            category: 2,
             prosthesis: 2,
             medicament: 2,
         });

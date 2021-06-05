@@ -107,12 +107,8 @@ const billValidator = async (credentials, selectors) => {
         let billSchema = joi.object({
             nReceipt: joi.number(),
             nBill: joi.number(),
-            nature: joi.string().trim().default(null),
-            category: joi
-                .string()
-                .uppercase()
-                .valid("PAID", "RAMED")
-                .default(null),
+            nature: joi.string().trim(),
+            category: joi.string().uppercase().valid("PAID", "RAMED"),
             episodeId: joi.number(),
             medicament: joi.number().default(0),
             actes: joi.number(),
