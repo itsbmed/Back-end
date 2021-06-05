@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
             medicament: DataTypes.INTEGER,
             actes: DataTypes.INTEGER,
             total: DataTypes.INTEGER,
-            category: DataTypes.ENUM("PAID", "RAMED"),
+            category: DataTypes.ENUM("PAYANT", "RAMED"),
             prosthesis: DataTypes.INTEGER,
         },
         {

@@ -108,7 +108,7 @@ const billValidator = async (credentials, selectors) => {
             nReceipt: joi.number(),
             nBill: joi.number(),
             nature: joi.string().trim(),
-            category: joi.string().uppercase().valid("PAID", "RAMED"),
+            category: joi.string().uppercase().valid("PAYANT", "RAMED"),
             episodeId: joi.number(),
             medicament: joi.number().default(0),
             actes: joi.number(),
