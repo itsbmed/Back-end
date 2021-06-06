@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
                 as: "patient",
             });
         }
+        async updateEpisode(newData) {
+            for (let data in newData) {
+                this[data] = newData[data];
+            }
+        }
     }
     Episode.init(
         {
