@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
                     key: "ipp",
                 },
             },
-            type: DataTypes.ENUM("external", "hospitalized"),
+            type: DataTypes.ENUM("EXTERNAL", "HOSPITALIZED"),
             category: DataTypes.STRING,
             initDate: DataTypes.DATE,
             entryDate: DataTypes.DATE,
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
             ),
             situation: DataTypes.STRING,
             tnErcure: DataTypes.STRING,
-            admType: DataTypes.ENUM("urgent", "normal"),
+            admType: DataTypes.ENUM("URGENT", "NORMAL"),
             tName: DataTypes.STRING,
         },
         {
