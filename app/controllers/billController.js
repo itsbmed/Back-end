@@ -1,6 +1,9 @@
 const createError = require("http-errors");
 const { Bill, Episode } = require("../models");
-const { billValidator } = require("../helpers/validationSchema");
+const {
+    billValidator,
+    episodeValidator,
+} = require("../helpers/validationSchema");
 const addBill = async (req, res, next) => {
     try {
         let params = await billValidator(req.params, {
@@ -33,6 +36,29 @@ const addBill = async (req, res, next) => {
     }
 };
 
+const getBills = async (req, res, next) => {
+    try {
+        let query = await episodeValidator(req.query, {
+            type: 2,
+            patientId: 1,
+        });
+        let episodeQuery = {
+            patientId: query.patientId,
+        };
+        if (query.type) episodeQuery.type = query.type;
+        let bills = await Bill.findAll({
+            include: {
+                model: Episode,
+                where: episodeQuery,
+                as: "episode",
+            },
+        });
+        res.json(bills);
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     addBill,
+    getBills,
 };
