@@ -4,6 +4,7 @@ const {
     episodeValidator,
     patientValidator,
 } = require("../helpers/validationSchema");
+const getPagination = require("../helpers/getPagination");
 
 // create a new episode for patient
 const createEpisode = async (req, res, next) => {
@@ -55,16 +56,14 @@ const createEpisode = async (req, res, next) => {
 const getEpisodes = async (req, res, next) => {
     try {
         let params = await patientValidator(req.params, { ipp: 1 });
-        let query = req.query;
-        let where = {
+        let query = await episodeValidator(req.query, { type: 2, page: 2 });
+        let episodeQuery = {
             patientId: params.ipp,
         };
-        if (query.type) {
-            query = await episodeValidator(req.query, { type: 1 });
-            where.type = query.type;
-        }
+        if (query.type) episodeQuery.type = query.type;
         let episodes = await Episode.findAll({
-            where,
+            where: episodeQuery,
+            ...getPagination(query.page),
             attributes: {
                 exclude: ["patientId"],
             },
