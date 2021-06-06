@@ -2,6 +2,7 @@ const { Agent } = require("../models");
 const createError = require("http-errors");
 const { agentValidator } = require("../helpers/validationSchema");
 const { signAccessToken } = require("../helpers/jwt");
+const getPagination = require("../helpers/getPagination");
 
 const signIn = async (req, res, next) => {
     try {
@@ -81,8 +82,10 @@ const deleteSpecifcAgent = async (req, res, next) => {
 const getAgents = async (req, res, next) => {
     try {
         let currentAgent = req.currentAgent;
+        let query = await agentValidator(req.query, { page: 2 });
         if (!currentAgent.isAdmin) throw createError.Forbidden();
         let agents = await Agent.findAll({
+            ...getPagination(query.page),
             attributes: { exclude: ["passWord"] },
         });
         res.json(agents);
