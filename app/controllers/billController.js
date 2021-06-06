@@ -25,6 +25,8 @@ const addBill = async (req, res, next) => {
         data.episodeId = params.episodeId;
         let bill = Bill.build(data);
         await bill.save();
+        episode.exitDate = Date.now();
+        await episode.save();
         res.status(201).json(bill);
     } catch (err) {
         next(err);
