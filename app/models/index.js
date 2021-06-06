@@ -26,14 +26,9 @@ models.Patient = require("./patientModel")(sequelize, Sequelize.DataTypes);
 models.Episode = require("./episodeModel")(sequelize, Sequelize.DataTypes);
 models.Bill = require("./billModel")(sequelize, Sequelize.DataTypes);
 
-models.Episode.belongsTo(models.Patient, {
-    foreignKey: "patientId",
-    as: "patient",
-});
-
 Object.keys(models).forEach((modelName) => {
     if (models[modelName].associate) {
-        models[modelName].associate(db);
+        models[modelName].associate(models);
     }
 });
 
