@@ -35,7 +35,7 @@ const agentValidator = async (credentials, selectors) => {
                 .trim(),
             passWord: joi.string().required().min(4).max(16),
             isAdmin: joi.boolean().default(false),
-            page: joi.number().default(1),
+            page: joi.number().greater(0).default(1),
         });
         agentSchema = validator(agentSchema, selectors);
         return await agentSchema.validateAsync(credentials);
@@ -65,7 +65,7 @@ const patientValidator = async (credentials, selectors) => {
                 .message("Please fill a valid nDate")
                 .optional()
                 .default(null),
-            page: joi.number().default(1),
+            page: joi.number().greater(0).default(1),
         });
         patientSchema = validator(patientSchema, selectors);
         return await patientSchema.validateAsync(credentials);
@@ -95,7 +95,7 @@ const episodeValidator = async (credentials, selectors) => {
             tnErcure: joi.string(),
             admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
             tName: joi.string(),
-            page: joi.number().default(1),
+            page: joi.number().greater(0).default(1),
         });
         episodeSchema = validator(episodeSchema, selectors);
         return await episodeSchema.validateAsync(credentials);
@@ -128,7 +128,7 @@ const billValidator = async (credentials, selectors) => {
                 }
             }),
             prosthesis: joi.number().default(0),
-            page: joi.number().default(1),
+            page: joi.number().greater(0).default(1),
         });
         billSchema = validator(billSchema, selectors);
         return await billSchema.validateAsync(credentials);
