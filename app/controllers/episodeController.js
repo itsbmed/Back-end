@@ -9,8 +9,8 @@ const {
 const createEpisode = async (req, res, next) => {
     try {
         let params = await patientValidator(req.params, { ipp: 1 });
-        let data = {};
-        if (req.body.type === "hospitalized") {
+        let data = req.body;
+        if (data.type?.toUpperCase() === "HOSPITALIZED") {
             data = await episodeValidator(req.body, {
                 type: 1,
                 admType: 1,
@@ -23,7 +23,7 @@ const createEpisode = async (req, res, next) => {
                 tnErcure: 2,
                 tName: 2,
             });
-        } else if (req.body.type === "external") {
+        } else if (data.type?.toUpperCase() === "EXTERNAL") {
             data = await episodeValidator(req.body, {
                 type: 1,
                 presentationNature: 1,
@@ -31,7 +31,9 @@ const createEpisode = async (req, res, next) => {
                 admType: 1,
             });
         } else {
-            throw createError.BadRequest();
+            throw createError.BadRequest(
+                "type must be one of [EXTERNAL, HOSPITALIZED]"
+            );
         }
         let patient = await Patient.findOne({
             where: {
