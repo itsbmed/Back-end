@@ -79,7 +79,46 @@ const getEpisodes = async (req, res, next) => {
     }
 };
 
+const updateEpisode = async (req, res, next) => {
+    try {
+        let params = await episodeValidator(req.params, { id: 1 });
+        let query = await episodeValidator(req.query, { type: 1 });
+        let data = {};
+        if (query.type === "HOSPITALIZED") {
+            data = await episodeValidator(req.body, {
+                admType: 2,
+                initDate: 2,
+                entryDate: 2,
+                service: 2,
+                category: 2,
+                exitDate: 2,
+                situation: 2,
+                tnErcure: 2,
+                tName: 2,
+            });
+        } else if (query.type === "EXTERNAL") {
+            data = await episodeValidator(req.body, {
+                presentationNature: 2,
+                initDate: 2,
+                admType: 2,
+            });
+        }
+        let episode = await Episode.findOne({
+            where: {
+                id: params.id,
+            },
+        });
+        if (!episode) throw createError.NotFound("Episode not found !");
+        let newData = { ...episode.dataValues, ...data };
+        await episode.updateEpisode(newData);
+        await episode.save();
+        res.json(episode);
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     createEpisode,
     getEpisodes,
+    updateEpisode,
 };
