@@ -77,6 +77,7 @@ const patientValidator = async (credentials, selectors) => {
 const episodeValidator = async (credentials, selectors) => {
     try {
         let episodeSchema = joi.object({
+            id: joi.number(),
             patientId: joi.number().min(100000).required(),
             type: joi.string().uppercase().valid("EXTERNAL", "HOSPITALIZED"),
             category: joi.string().uppercase().valid("P,P", "RAMED", "MAFAR"),
