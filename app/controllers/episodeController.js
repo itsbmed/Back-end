@@ -117,8 +117,25 @@ const updateEpisode = async (req, res, next) => {
         next(err);
     }
 };
+
+const deleteEpisode = async (req, res, next) => {
+    try {
+        let params = await episodeValidator(req.params, { id: 1 });
+        let episode = await Episode.findOne({
+            where: {
+                id: params.id,
+            },
+        });
+        if (!episode) throw createError.NotFound("Episode not found !");
+        await episode.destroy();
+        res.status(204).end();
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     createEpisode,
     getEpisodes,
     updateEpisode,
+    deleteEpisode,
 };
