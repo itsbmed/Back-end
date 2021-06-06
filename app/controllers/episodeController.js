@@ -106,6 +106,7 @@ const updateEpisode = async (req, res, next) => {
         let episode = await Episode.findOne({
             where: {
                 id: params.id,
+                type: data.type,
             },
         });
         if (!episode) throw createError.NotFound("Episode not found !");
