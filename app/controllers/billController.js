@@ -11,14 +11,18 @@ const addBill = async (req, res, next) => {
             episodeId: 1,
         });
         let data = await billValidator(req.body, {
-            nReceipt: 1,
-            nBill: 1,
+            organismPart: 1,
+            adherentPart: 1,
+            billNum: 1,
+            billDate: 1,
+            medicalBiology: 1,
+            medicalImaging: 1,
+            prosthesis: 1,
+            invoicedStay: 1,
+            medicalFees: 1,
+            billedMedication: 1,
             actes: 1,
             total: 1,
-            nature: 2,
-            category: 2,
-            prosthesis: 2,
-            medicament: 2,
         });
         let episode = await Episode.findOne({
             where: {

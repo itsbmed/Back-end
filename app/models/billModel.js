@@ -23,9 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     }
     Bill.init(
         {
-            nReceipt: DataTypes.INTEGER,
-            nBill: DataTypes.INTEGER,
-            nature: DataTypes.STRING,
             episodeId: {
                 type: DataTypes.INTEGER,
                 references: {
@@ -33,15 +30,24 @@ module.exports = (sequelize, DataTypes) => {
                     key: "id",
                 },
             },
-            medicament: DataTypes.INTEGER,
+            organismPart: DataTypes.INTEGER,
+            adherentPart: DataTypes.INTEGER,
+            billNum: {
+                type: DataTypes.INTEGER,
+                unique: true,
+            },
+            billDate: DataTypes.DATE,
+            medicalBiology: DataTypes.INTEGER,
+            medicalImaging: DataTypes.INTEGER,
+            prosthesis: DataTypes.INTEGER,
+            InvoicedStay: DataTypes.INTEGER,
+            medicalFees: DataTypes.INTEGER,
+            billedMedication: DataTypes.INTEGER,
             actes: DataTypes.INTEGER,
             total: DataTypes.INTEGER,
-            category: DataTypes.ENUM("PAYANT", "RAMED"),
-            prosthesis: DataTypes.INTEGER,
         },
         {
             sequelize,
-            timestamps: false,
             modelName: "Bill",
         }
     );
