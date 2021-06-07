@@ -24,8 +24,14 @@ const addBill = async (req, res, next) => {
             where: {
                 id: params.episodeId,
             },
+            include: {
+                model: Bill,
+                as: "bill",
+            },
         });
         if (!episode) throw createError.NotFound("Episode not found !");
+        else if (episode.bill)
+            throw createError.Conflict("Episode already has a bill !");
         data.episodeId = params.episodeId;
         let bill = Bill.build(data);
         await bill.save();
