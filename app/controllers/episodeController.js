@@ -84,7 +84,7 @@ const updateEpisode = async (req, res, next) => {
         let query = await episodeValidator(req.query, { type: 1 });
         let data = {};
         // clean req.body from null properties
-        Object.keys(req.body, (key) => {
+        Object.keys(req.body).forEach((key) => {
             if (!req.body[key]) delete req.body[key];
         });
         if (query.type === "HOSPITALIZED") {
