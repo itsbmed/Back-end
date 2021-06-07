@@ -17,15 +17,13 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER(255),
                 primaryKey: true,
                 autoIncrement: true,
+                unique: true,
             },
             firstName: DataTypes.STRING,
             lastName: DataTypes.STRING,
-            nCode: DataTypes.STRING(255),
-            nDate: DataTypes.STRING,
         },
         {
             sequelize,
-            timestamps: false,
             modelName: "Patient",
         }
     );
