@@ -15,21 +15,29 @@ const createEpisode = async (req, res, next) => {
             data = await episodeValidator(req.body, {
                 type: 1,
                 admType: 1,
-                initDate: 1,
+                firstName: 1,
+                lastName: 1,
+                cin: 1,
+                address: 1,
                 entryDate: 1,
                 service: 1,
+                presentationNature: 1,
                 category: 1,
-                exitDate: 2,
-                situation: 2,
-                tnErcure: 2,
-                tName: 2,
+                ramidNum: 2,
+                ramidExpDate: 2,
             });
         } else if (data.type?.toUpperCase() === "EXTERNAL") {
             data = await episodeValidator(req.body, {
                 type: 1,
-                presentationNature: 1,
-                initDate: 1,
                 admType: 1,
+                firstName: 1,
+                lastName: 1,
+                cin: 1,
+                address: 1,
+                presentationNature: 1,
+                category: 1,
+                ramidNum: 2,
+                ramidExpDate: 2,
             });
         } else {
             throw createError.BadRequest(
@@ -45,7 +53,6 @@ const createEpisode = async (req, res, next) => {
         data.patientId = patient.ipp;
 
         let episode = Episode.build(data);
-
         await episode.save();
         res.json(episode);
     } catch (err) {
@@ -96,20 +103,27 @@ const updateEpisode = async (req, res, next) => {
         if (query.type === "HOSPITALIZED") {
             data = await episodeValidator(req.body, {
                 admType: 2,
-                initDate: 2,
-                entryDate: 2,
+                firstName: 2,
+                lastName: 2,
+                cin: 2,
+                address: 2,
                 service: 2,
+                presentationNature: 2,
                 category: 2,
-                exitDate: 2,
-                situation: 2,
-                tnErcure: 2,
-                tName: 2,
+                ramidNum: 2,
+                ramidExpDate: 2,
             });
         } else if (query.type === "EXTERNAL") {
             data = await episodeValidator(req.body, {
-                presentationNature: 2,
-                initDate: 2,
                 admType: 2,
+                firstName: 2,
+                lastName: 2,
+                cin: 2,
+                address: 2,
+                presentationNature: 2,
+                category: 2,
+                ramidNum: 2,
+                ramidExpDate: 2,
             });
         }
         let episode = await Episode.findOne({
