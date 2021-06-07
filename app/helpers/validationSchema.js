@@ -53,18 +53,6 @@ const patientValidator = async (credentials, selectors) => {
             ipp: joi.number().min(100000).required(),
             firstName: joi.string().min(2).max(30).trim(),
             lastName: joi.string().min(2).max(30).trim(),
-            nCode: joi
-                .string()
-                .regex(/^[0-9]{15,25}$/)
-                .message("Please fill a valid nCode")
-                .optional()
-                .default(null),
-            nDate: joi
-                .string()
-                .regex(/^([0-9]{2})\/([0-9]{2})$/)
-                .message("Please fill a valid nDate")
-                .optional()
-                .default(null),
             page: joi.number().greater(0).default(1),
         });
         patientSchema = validator(patientSchema, selectors);
@@ -81,20 +69,50 @@ const episodeValidator = async (credentials, selectors) => {
         let episodeSchema = joi.object({
             id: joi.number(),
             patientId: joi.number().min(100000).required(),
+            firstName: joi.string().min(2).max(30),
+            lastName: joi.string().min(2).max(30),
+            cin: joi.string().min(8).max(10),
+            address: joi.string().max(255),
             type: joi.string().uppercase().valid("EXTERNAL", "HOSPITALIZED"),
-            category: joi.string().uppercase().valid("P,P", "RAMED", "MAFAR"),
-            initDate: joi.date(),
             entryDate: joi.date(),
             exitDate: joi.date(),
-            presentationNature: joi.string().uppercase().valid("CS/SP", "RX"),
+            admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
+            ramidExpDate: joi.date(),
+            ramidNum: joi.number().min(4).max(20),
+            category: joi
+                .string()
+                .uppercase()
+                .valid(
+                    "PAID",
+                    "POTENTIAL",
+                    "RAMED",
+                    "CNOPS",
+                    "MAFAR",
+                    "CNSS",
+                    "ORGANISM"
+                ),
+            presentationNature: joi
+                .string()
+                .uppercase()
+                .valid("LAB", "RADIO", "MEDICAL", "SURGICAL", "REANIMATION"),
             service: joi
                 .string()
                 .uppercase()
-                .valid("P1", "P2", "P3", "P4", "CH-A", "CH-B", "CH-C", "CH-D"),
-            situation: joi.string(),
-            tnErcure: joi.string(),
-            admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
-            tName: joi.string(),
+                .valid(
+                    "P1",
+                    "P2",
+                    "P3",
+                    "P4",
+                    "CHA",
+                    "CHB",
+                    "CHC",
+                    "CHD",
+                    "CHOP",
+                    "UPM",
+                    "UPC",
+                    "REAA",
+                    "REAB"
+                ),
             page: joi.number().greater(0).default(1),
         });
         episodeSchema = validator(episodeSchema, selectors);
@@ -109,25 +127,19 @@ const episodeValidator = async (credentials, selectors) => {
 const billValidator = async (credentials, selectors) => {
     try {
         let billSchema = joi.object({
-            nReceipt: joi.number(),
-            nBill: joi.number(),
-            nature: joi.string().trim(),
-            category: joi.string().uppercase().valid("PAYANT", "RAMED"),
             episodeId: joi.number(),
-            medicament: joi.number().default(0),
-            actes: joi.number(),
-            total: joi.number().custom((value, helpers) => {
-                let state = helpers.state.ancestors[0];
-                if (
-                    value ===
-                    state.medicament + state.actes + state.prosthesis
-                ) {
-                    return value;
-                } else {
-                    return helpers.message("Please fill a valid total !");
-                }
-            }),
+            organismPart: joi.number().default(0),
+            adherentPart: joi.number().default(0),
+            billNum: joi.string().min(4).max(10),
+            billDate: joi.date(),
+            medicalBiology: joi.number().default(0),
+            medicalImaging: joi.number().default(0),
             prosthesis: joi.number().default(0),
+            invoicedStay: joi.number().default(0),
+            medicalFees: joi.number().default(0),
+            billedMedication: joi.number().default(0),
+            actes: joi.number().default(0),
+            total: joi.number().default(0),
             page: joi.number().greater(0).default(1),
         });
         billSchema = validator(billSchema, selectors);
