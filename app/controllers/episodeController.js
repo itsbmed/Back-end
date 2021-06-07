@@ -23,8 +23,8 @@ const createEpisode = async (req, res, next) => {
                 service: 1,
                 presentationNature: 1,
                 category: 1,
-                ramidNum: 2,
-                ramidExpDate: 2,
+                ramedNum: 2,
+                ramedExpDate: 2,
             });
         } else if (data.type?.toUpperCase() === "EXTERNAL") {
             data = await episodeValidator(req.body, {
@@ -36,8 +36,8 @@ const createEpisode = async (req, res, next) => {
                 address: 1,
                 presentationNature: 1,
                 category: 1,
-                ramidNum: 2,
-                ramidExpDate: 2,
+                ramedNum: 2,
+                ramedExpDate: 2,
             });
         } else {
             throw createError.BadRequest(
@@ -110,8 +110,8 @@ const updateEpisode = async (req, res, next) => {
                 service: 2,
                 presentationNature: 2,
                 category: 2,
-                ramidNum: 2,
-                ramidExpDate: 2,
+                ramedNum: 2,
+                ramedExpDate: 2,
             });
         } else if (query.type === "EXTERNAL") {
             data = await episodeValidator(req.body, {
@@ -122,8 +122,8 @@ const updateEpisode = async (req, res, next) => {
                 address: 2,
                 presentationNature: 2,
                 category: 2,
-                ramidNum: 2,
-                ramidExpDate: 2,
+                ramedNum: 2,
+                ramedExpDate: 2,
             });
         }
         let episode = await Episode.findOne({

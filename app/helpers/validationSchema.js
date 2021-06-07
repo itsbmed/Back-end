@@ -77,8 +77,8 @@ const episodeValidator = async (credentials, selectors) => {
             entryDate: joi.date(),
             exitDate: joi.date(),
             admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
-            ramidExpDate: joi.date(),
-            ramidNum: joi.number().min(4).max(20),
+            ramedExpDate: joi.date(),
+            ramedNum: joi.number().min(4).max(20),
             category: joi
                 .string()
                 .uppercase()

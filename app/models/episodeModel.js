@@ -69,8 +69,8 @@ module.exports = (sequelize, DataTypes) => {
                 "REAA",
                 "REAB"
             ),
-            ramidExpDate: DataTypes.DATE,
-            ramidNum: DataTypes.INTEGER,
+            ramedExpDate: DataTypes.DATE,
+            ramedNum: DataTypes.INTEGER,
         },
         {
             sequelize,
