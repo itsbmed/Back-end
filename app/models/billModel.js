@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: "episodeId",
                 as: "episode",
             });
+            models.Episode.hasOne(models.Bill, {
+                onDelete: "cascade",
+                foreignKey: "episodeId",
+                as: "bill",
+            });
         }
     }
     Bill.init(

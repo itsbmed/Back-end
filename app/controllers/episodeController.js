@@ -1,5 +1,5 @@
 const createError = require("http-errors");
-const { Episode, Patient } = require("../models");
+const { Episode, Patient, Bill } = require("../models");
 const {
     episodeValidator,
     patientValidator,
@@ -67,10 +67,16 @@ const getEpisodes = async (req, res, next) => {
             attributes: {
                 exclude: ["patientId"],
             },
-            include: {
-                model: Patient,
-                as: "patient",
-            },
+            include: [
+                {
+                    model: Patient,
+                    as: "patient",
+                },
+                {
+                    model: Bill,
+                    as: "bill",
+                },
+            ],
         });
         res.json(episodes);
     } catch (err) {
