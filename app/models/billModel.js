@@ -32,10 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             organismPart: DataTypes.INTEGER,
             adherentPart: DataTypes.INTEGER,
-            billNum: {
-                type: DataTypes.INTEGER,
-                unique: true,
-            },
+            billNum: DataTypes.INTEGER,
             billDate: DataTypes.DATE,
             medicalBiology: DataTypes.INTEGER,
             medicalImaging: DataTypes.INTEGER,
