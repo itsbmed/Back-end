@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
                 as: "bill",
             });
         }
+        async updateBill(newData) {
+            for (let data in newData) {
+                this[data] = newData[data];
+            }
+        }
     }
     Bill.init(
         {
