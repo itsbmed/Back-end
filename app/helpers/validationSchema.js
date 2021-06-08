@@ -127,6 +127,7 @@ const episodeValidator = async (credentials, selectors) => {
 const billValidator = async (credentials, selectors) => {
     try {
         let billSchema = joi.object({
+            id: joi.number(),
             episodeId: joi.number(),
             organismPart: joi.number().default(0),
             adherentPart: joi.number().default(0),
