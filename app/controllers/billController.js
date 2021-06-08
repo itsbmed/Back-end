@@ -37,6 +37,7 @@ const addBill = async (req, res, next) => {
         else if (episode.bill)
             throw createError.Conflict("Episode already has a bill !");
         data.episodeId = params.episodeId;
+        // TODO : check if bill already exists using  billNum field and add it as unique field in model
         let bill = Bill.build(data);
         await bill.save();
         episode.exitDate = Date.now();
@@ -71,7 +72,42 @@ const getBills = async (req, res, next) => {
         next(err);
     }
 };
+
+const updateBill = async (req, res, next) => {
+    try {
+        let params = await billValidator(req.params, { id: 1 });
+        let data = await billValidator(req.body, {
+            organismPart: 2,
+            adherentPart: 2,
+            billNum: 2,
+            billDate: 2,
+            medicalBiology: 2,
+            medicalImaging: 2,
+            prosthesis: 2,
+            invoicedStay: 2,
+            medicalFees: 2,
+            billedMedication: 2,
+            actes: 2,
+            total: 2,
+        });
+        let bill = await Bill.findOne({
+            where: {
+                id: params.id,
+            },
+        });
+        if (!bill) throw createError.NotFound("Bill not found !");
+
+        let newData = { ...bill.dataValues, ...data };
+        await bill.updateBill(newData);
+        await bill.save();
+
+        res.json(bill);
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     addBill,
     getBills,
+    updateBill,
 };
