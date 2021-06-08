@@ -78,7 +78,12 @@ const episodeValidator = async (credentials, selectors) => {
             exitDate: joi.date(),
             admType: joi.string().uppercase().valid("URGENT", "NORMAL"),
             ramedExpDate: joi.date(),
-            ramedNum: joi.number().min(4).max(20),
+            ramedNum: joi
+                .string()
+                .regex(/[0-9]+/)
+                .message("Please fill a valid remedNum !")
+                .min(4)
+                .max(20),
             category: joi
                 .string()
                 .uppercase()
