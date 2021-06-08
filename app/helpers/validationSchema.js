@@ -137,7 +137,6 @@ const billValidator = async (credentials, selectors) => {
             organismPart: joi.number().default(0),
             adherentPart: joi.number().default(0),
             billNum: joi.string().min(4).max(10),
-            billDate: joi.date(),
             medicalBiology: joi.number().default(0),
             medicalImaging: joi.number().default(0),
             prosthesis: joi.number().default(0),
