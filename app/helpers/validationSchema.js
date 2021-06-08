@@ -80,10 +80,8 @@ const episodeValidator = async (credentials, selectors) => {
             ramedExpDate: joi.date(),
             ramedNum: joi
                 .string()
-                .regex(/[0-9]+/)
-                .message("Please fill a valid remedNum !")
-                .min(4)
-                .max(20),
+                .regex(/[0-9]{4,20}/)
+                .message("Please fill a valid remedNum !"),
             category: joi
                 .string()
                 .uppercase()
