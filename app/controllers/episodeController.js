@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const { Episode, Patient, Bill } = require("../models");
+const sequelize = require("sequelize");
 const {
     episodeValidator,
     patientValidator,
@@ -157,9 +158,59 @@ const deleteEpisode = async (req, res, next) => {
         next(err);
     }
 };
+
+const getStatistics = async (req, res, next) => {
+    try {
+        let query = await episodeValidator(req.query, {
+            type: 1,
+            from: 1,
+            to: 1,
+        });
+        let options = {
+            where: {
+                exitDate: {
+                    [sequelize.Op.ne]: null,
+                },
+                createdAt: {
+                    [sequelize.Op.between]: [query.from, query.to],
+                },
+            },
+            attributes: [
+                "category",
+                [
+                    sequelize.fn("SUM", sequelize.col("bill.total")),
+                    "amountTotal",
+                ],
+                [
+                    sequelize.fn("COUNT", sequelize.col("Episode.exitDate")),
+                    "episodeCount",
+                ],
+            ],
+            include: {
+                model: Bill,
+                attributes: [],
+                as: "bill",
+            },
+            group: ["category"],
+        };
+        if (query.type) {
+            options.where.type = query.type;
+        }
+        if (query?.type === "EXTERNAL") {
+            options.attributes.unshift("presentationNature");
+            options.group.unshift("presentationNature");
+        }
+
+        let result = await Episode.findAll(options);
+        res.json(result);
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     createEpisode,
     getEpisodes,
     updateEpisode,
     deleteEpisode,
+    getStatistics,
 };
