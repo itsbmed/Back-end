@@ -117,6 +117,8 @@ const episodeValidator = async (credentials, selectors) => {
                     "REAB"
                 ),
             page: joi.number().greater(0).default(1),
+            from: joi.date(),
+            to: joi.date().greater(joi.ref("from")),
         });
         episodeSchema = validator(episodeSchema, selectors);
         return await episodeSchema.validateAsync(credentials);
