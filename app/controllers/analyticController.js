@@ -1,4 +1,4 @@
-const { Episode, Bill } = require("../models");
+const { Episode, Bill, Patient, Agent } = require("../models");
 const sequelize = require("sequelize");
 const { episodeValidator } = require("../helpers/validationSchema");
 
@@ -59,6 +59,20 @@ const getStatistics = async (req, res, next) => {
     }
 };
 
+const getTotals = async (req, res, next) => {
+    try {
+        let results = {};
+        results.agentsCount = await Agent.count();
+        results.patientsCount = await Patient.count();
+        results.billsCount = await Bill.count();
+        results.episodesCount = await Episode.count();
+        res.json(results);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     getStatistics,
+    getTotals,
 };
