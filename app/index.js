@@ -26,6 +26,7 @@ const agentRouter = require("./routes/agentRouter");
 const patientRouter = require("./routes/patientRouter");
 const episodeRouter = require("./routes/episodeRouter");
 const billRouter = require("./routes/billRouter");
+const analyticRouter = require("./routes/analyticRouter");
 const env = process.env.NODE_ENV;
 const {
     name,
@@ -57,6 +58,7 @@ app.use(api_path, agentRouter);
 app.use(api_path, patientRouter);
 app.use(api_path, episodeRouter);
 app.use(api_path, billRouter);
+app.use(api_path, analyticRouter);
 
 // handle 404 error
 app.use("*", (req, res, next) => {
