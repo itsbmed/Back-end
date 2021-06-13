@@ -197,8 +197,16 @@ const getStatistics = async (req, res, next) => {
             options.where.type = query.type;
         }
         if (query?.type === "EXTERNAL") {
-            options.attributes.unshift("presentationNature");
-            options.group.unshift("presentationNature");
+            options.where[sequelize.Op.or] = [
+                {
+                    presentationNature: "LAB",
+                },
+                {
+                    presentationNature: "RADIO",
+                },
+            ];
+            options.attributes.push("presentationNature");
+            options.group.push("presentationNature");
         }
 
         let result = await Episode.findAll(options);
