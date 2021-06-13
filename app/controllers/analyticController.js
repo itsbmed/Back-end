@@ -62,10 +62,10 @@ const getStatistics = async (req, res, next) => {
 const getTotals = async (req, res, next) => {
     try {
         let results = {};
-        results.agentsCount = await Agent.count();
-        results.patientsCount = await Patient.count();
-        results.billsCount = await Bill.count();
-        results.episodesCount = await Episode.count();
+        results.agentCount = await Agent.count();
+        results.patientCount = await Patient.count();
+        results.billCount = await Bill.count();
+        results.episodeCount = await Episode.count();
         res.json(results);
     } catch (err) {
         next(err);
