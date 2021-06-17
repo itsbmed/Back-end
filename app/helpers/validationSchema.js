@@ -101,7 +101,7 @@ const episodeValidator = async (credentials, selectors, options = {}) => {
             presentationNature: joi
                 .string()
                 .uppercase()
-                .valid("LAB", "RADIO", "MEDICAL", "SURGICAL", "REANIMATION"),
+                .valid("LAB", "RADIO", "CONSULTATION"),
             service: joi
                 .string()
                 .uppercase()
@@ -120,6 +120,7 @@ const episodeValidator = async (credentials, selectors, options = {}) => {
                     "REAA",
                     "REAB"
                 ),
+            hospitalDay: joi.boolean(),
             page: joi.number().greater(0).default(1),
             from: joi.date(),
             to: joi.date().greater(joi.ref("from")),
@@ -147,6 +148,19 @@ let billSchema = joi.object({
     billedMedication: joi.number().default(0),
     actes: joi.number().default(0),
     total: joi.number().default(0),
+    totalOf: joi
+        .string()
+        .lowercase()
+        .valid(
+            "medicalbiology",
+            "medicalimaging",
+            "prosthesis",
+            "invoicedstay",
+            "medicalfees",
+            "billedmedication",
+            "actes",
+            "total"
+        ),
     page: joi.number().greater(0).default(1),
 });
 const billValidator = async (credentials, selectors, options = {}) => {
