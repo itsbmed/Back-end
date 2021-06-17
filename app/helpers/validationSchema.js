@@ -1,6 +1,9 @@
 const joi = require("joi");
 
-const validator = (schema, selectors = {}) => {
+const validator = (schema, selectors = {}, options) => {
+    if (options?.merge) {
+        schema = schema.concat(options.merge);
+    }
     const requiredFields = [];
     const optionalFields = [];
     const forbiddenFields = [];
@@ -19,10 +22,11 @@ const validator = (schema, selectors = {}) => {
     schema = schema.fork(requiredFields, (field) => field.required());
     schema = schema.fork(optionalFields, (field) => field.optional());
     schema = schema.fork(forbiddenFields, (field) => field.forbidden());
+
     return schema;
 };
 
-const agentValidator = async (credentials, selectors) => {
+const agentValidator = async (credentials, selectors, options = {}) => {
     try {
         let agentSchema = joi.object({
             firstName: joi.string().min(2).max(10).optional().trim(),
@@ -37,7 +41,7 @@ const agentValidator = async (credentials, selectors) => {
             isAdmin: joi.boolean().default(false),
             page: joi.number().greater(0).default(1),
         });
-        agentSchema = validator(agentSchema, selectors);
+        agentSchema = validator(agentSchema, selectors, options);
         return await agentSchema.validateAsync(credentials);
     } catch (err) {
         if (err.isJoi) {
@@ -47,7 +51,7 @@ const agentValidator = async (credentials, selectors) => {
     }
 };
 
-const patientValidator = async (credentials, selectors) => {
+const patientValidator = async (credentials, selectors, options = {}) => {
     try {
         let patientSchema = joi.object({
             ipp: joi.number().min(100000).required(),
@@ -55,7 +59,7 @@ const patientValidator = async (credentials, selectors) => {
             lastName: joi.string().min(2).max(30).trim(),
             page: joi.number().greater(0).default(1),
         });
-        patientSchema = validator(patientSchema, selectors);
+        patientSchema = validator(patientSchema, selectors, options);
         return await patientSchema.validateAsync(credentials);
     } catch (err) {
         if (err.isJoi) {
@@ -64,7 +68,7 @@ const patientValidator = async (credentials, selectors) => {
         throw err;
     }
 };
-const episodeValidator = async (credentials, selectors) => {
+const episodeValidator = async (credentials, selectors, options = {}) => {
     try {
         let episodeSchema = joi.object({
             id: joi.number(),
@@ -120,7 +124,7 @@ const episodeValidator = async (credentials, selectors) => {
             from: joi.date(),
             to: joi.date().greater(joi.ref("from")),
         });
-        episodeSchema = validator(episodeSchema, selectors);
+        episodeSchema = validator(episodeSchema, selectors, options);
         return await episodeSchema.validateAsync(credentials);
     } catch (err) {
         if (err.isJoi) {
@@ -129,25 +133,25 @@ const episodeValidator = async (credentials, selectors) => {
         throw err;
     }
 };
-const billValidator = async (credentials, selectors) => {
+let billSchema = joi.object({
+    id: joi.number(),
+    episodeId: joi.number(),
+    organismPart: joi.number().default(0),
+    adherentPart: joi.number().default(0),
+    billNum: joi.string().min(4).max(10),
+    medicalBiology: joi.number().default(0),
+    medicalImaging: joi.number().default(0),
+    prosthesis: joi.number().default(0),
+    invoicedStay: joi.number().default(0),
+    medicalFees: joi.number().default(0),
+    billedMedication: joi.number().default(0),
+    actes: joi.number().default(0),
+    total: joi.number().default(0),
+    page: joi.number().greater(0).default(1),
+});
+const billValidator = async (credentials, selectors, options = {}) => {
     try {
-        let billSchema = joi.object({
-            id: joi.number(),
-            episodeId: joi.number(),
-            organismPart: joi.number().default(0),
-            adherentPart: joi.number().default(0),
-            billNum: joi.string().min(4).max(10),
-            medicalBiology: joi.number().default(0),
-            medicalImaging: joi.number().default(0),
-            prosthesis: joi.number().default(0),
-            invoicedStay: joi.number().default(0),
-            medicalFees: joi.number().default(0),
-            billedMedication: joi.number().default(0),
-            actes: joi.number().default(0),
-            total: joi.number().default(0),
-            page: joi.number().greater(0).default(1),
-        });
-        billSchema = validator(billSchema, selectors);
+        billSchema = validator(billSchema, selectors, options);
         return await billSchema.validateAsync(credentials);
     } catch (err) {
         if (err.isJoi) {
@@ -161,4 +165,5 @@ module.exports = {
     patientValidator,
     episodeValidator,
     billValidator,
+    billSchema,
 };
