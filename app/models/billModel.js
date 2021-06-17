@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             medicalBiology: DataTypes.INTEGER,
             medicalImaging: DataTypes.INTEGER,
             prosthesis: DataTypes.INTEGER,
-            InvoicedStay: DataTypes.INTEGER,
+            invoicedStay: DataTypes.INTEGER,
             medicalFees: DataTypes.INTEGER,
             billedMedication: DataTypes.INTEGER,
             actes: DataTypes.INTEGER,
