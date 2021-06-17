@@ -71,6 +71,7 @@ module.exports = (sequelize, DataTypes) => {
             ),
             ramedExpDate: DataTypes.DATE,
             ramedNum: DataTypes.INTEGER,
+            hospitalDay: DataTypes.BOOLEAN,
         },
         {
             sequelize,
