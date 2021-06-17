@@ -1,13 +1,18 @@
 const { Episode, Bill, Patient, Agent } = require("../models");
 const sequelize = require("sequelize");
-const { episodeValidator } = require("../helpers/validationSchema");
+const { episodeValidator, billSchema } = require("../helpers/validationSchema");
 
 const getStatistics = async (req, res, next) => {
     try {
-        let query = await episodeValidator(req.query, {
-            type: 1,
-            from: 1,
-            to: 1,
+        let query = await episodeValidator(
+            req.query,
+            {
+                type: 1,
+                from: 1,
+                to: 1,
+                totalOf: 1,
+                service: 2,
+                admType: 2,
             },
             {
                 merge: billSchema,
@@ -25,10 +30,6 @@ const getStatistics = async (req, res, next) => {
             attributes: [
                 "category",
                 [
-                    sequelize.fn("SUM", sequelize.col("bill.total")),
-                    "amountTotal",
-                ],
-                [
                     sequelize.fn("COUNT", sequelize.col("Episode.exitDate")),
                     "episodeCount",
                 ],
@@ -42,6 +43,18 @@ const getStatistics = async (req, res, next) => {
         };
         if (query.type) {
             options.where.type = query.type;
+        }
+        if (query.admType) {
+            options.where.admType = query.admType;
+        }
+        if (query.service) {
+            options.where.service = query.service;
+        }
+        if (query.totalOf) {
+            options.attributes.push([
+                sequelize.fn("SUM", sequelize.col(`bill.${query.totalOf}`)),
+                "amountTotal",
+            ]);
         }
         if (query?.type === "EXTERNAL") {
             options.where[sequelize.Op.or] = [
