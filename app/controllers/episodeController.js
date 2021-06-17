@@ -36,6 +36,7 @@ const createEpisode = async (req, res, next) => {
                 cin: 1,
                 address: 1,
                 presentationNature: 1,
+                service: 1,
                 category: 1,
                 ramedNum: 2,
                 ramedExpDate: 2,
