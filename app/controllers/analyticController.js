@@ -64,6 +64,9 @@ const getStatistics = async (req, res, next) => {
                 {
                     presentationNature: "RADIO",
                 },
+                {
+                    presentationNature: "CONSULTATION",
+                },
             ];
             options.attributes.push("presentationNature");
             options.group.push("presentationNature");
