@@ -8,7 +8,11 @@ const getStatistics = async (req, res, next) => {
             type: 1,
             from: 1,
             to: 1,
-        });
+            },
+            {
+                merge: billSchema,
+            }
+        );
         let options = {
             where: {
                 exitDate: {
