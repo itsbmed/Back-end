@@ -70,6 +70,9 @@ const getStatistics = async (req, res, next) => {
             ];
             options.attributes.push("presentationNature");
             options.group.push("presentationNature");
+        } else if (query?.type === "HOSPITALIZED") {
+            options.attributes.push("hospitalDay");
+            options.group.push("hospitalDay");
         }
 
         let result = await Episode.findAll(options);
