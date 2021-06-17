@@ -22,8 +22,8 @@ const createEpisode = async (req, res, next) => {
                 address: 1,
                 entryDate: 1,
                 service: 1,
-                presentationNature: 1,
                 category: 1,
+                hospitalDay: 1,
                 ramedNum: 2,
                 ramedExpDate: 2,
             });
