@@ -47,13 +47,7 @@ module.exports = (sequelize, DataTypes) => {
                 "CNSS",
                 "ORGANISM"
             ),
-            presentationNature: DataTypes.ENUM(
-                "LAB",
-                "RADIO",
-                "MEDICAL",
-                "SURGICAL",
-                "REANIMATION"
-            ),
+            presentationNature: DataTypes.ENUM("LAB", "RADIO", "CONSULTATION"),
             service: DataTypes.ENUM(
                 "P1",
                 "P2",
