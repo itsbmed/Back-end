@@ -96,6 +96,7 @@ const episodeValidator = async (credentials, selectors, options = {}) => {
                     "CNOPS",
                     "MAFAR",
                     "CNSS",
+                    "PERSONNEL",
                     "ORGANISM"
                 ),
             presentationNature: joi
@@ -110,10 +111,10 @@ const episodeValidator = async (credentials, selectors, options = {}) => {
                     "P2",
                     "P3",
                     "P4",
+                    "P5",
                     "CHA",
                     "CHB",
                     "CHC",
-                    "CHD",
                     "CHOP",
                     "UPM",
                     "UPC",
