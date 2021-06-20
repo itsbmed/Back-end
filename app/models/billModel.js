@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
                     key: "id",
                 },
             },
+            agentId: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: "Agents",
+                    key: "id",
+                },
+            },
             organismPart: DataTypes.INTEGER,
             adherentPart: DataTypes.INTEGER,
             billNum: DataTypes.INTEGER,

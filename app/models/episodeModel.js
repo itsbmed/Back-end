@@ -30,6 +30,13 @@ module.exports = (sequelize, DataTypes) => {
                     key: "ipp",
                 },
             },
+            agentId: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: "Agents",
+                    key: "id",
+                },
+            },
             firstName: DataTypes.STRING,
             lastName: DataTypes.STRING,
             cin: DataTypes.STRING,
@@ -57,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
                 "P5",
                 "CHA",
                 "CHB",
-                "CHC", 
+                "CHC",
                 "CHOP",
                 "UPM",
                 "UPC",
