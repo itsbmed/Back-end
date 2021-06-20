@@ -36,6 +36,7 @@ const addBill = async (req, res, next) => {
         else if (episode.bill)
             throw createError.Conflict("Episode already has a bill !");
         data.episodeId = params.episodeId;
+        data.agentId = req.currentAgent.id;
         // TODO : check if bill already exists using  billNum field and add it as unique field in model
         let bill = Bill.build(data);
         await bill.save();

@@ -53,6 +53,7 @@ const createEpisode = async (req, res, next) => {
         });
         if (!patient) throw createError.NotFound("Patient not found !");
         data.patientId = patient.ipp;
+        data.agentId = req.currentAgent.id;
 
         let episode = Episode.build(data);
         await episode.save();
