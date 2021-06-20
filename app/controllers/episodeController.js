@@ -111,10 +111,7 @@ const updateEpisode = async (req, res, next) => {
                 cin: 2,
                 address: 2,
                 service: 2,
-                presentationNature: 2,
                 category: 2,
-                ramedNum: 2,
-                ramedExpDate: 2,
             });
         } else if (query.type === "EXTERNAL") {
             data = await episodeValidator(req.body, {
@@ -125,8 +122,7 @@ const updateEpisode = async (req, res, next) => {
                 address: 2,
                 presentationNature: 2,
                 category: 2,
-                ramedNum: 2,
-                ramedExpDate: 2,
+                service: 2,
             });
         }
         let episode = await Episode.findOne({
