@@ -10,9 +10,8 @@ const createAgentAdmin = require("./helpers/createAgentAdmin");
 
 // sync sequelize to create models
 const { db } = require("./models/index");
-db.sequelize.sync();
-// create agent admin
-(async () => {
+db.sequelize.sync().then(async () => {
+    // create agent admin
     await createAgentAdmin({
         userName: process.env.ADMIN_USERNAME || "admin",
         passWord: process.env.ADMIN_PASSWORD || "admin",
@@ -20,7 +19,7 @@ db.sequelize.sync();
         lastName: process.env.ADMIN_LASTNAME || "Admin",
         isAdmin: true,
     });
-})();
+});
 // inlcude routers
 const agentRouter = require("./routes/agentRouter");
 const patientRouter = require("./routes/patientRouter");
