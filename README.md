@@ -7,6 +7,8 @@
 -   Add .env file to root app :
 
 ```
+# setting environment of app
+NODE_ENV=development
 # setting port of server
 PORT=3030
 # enable debugger
@@ -24,25 +26,10 @@ DB_NAME=YOUR DATABASE NAME
 ACCESS_TOKEN_SECRET_KEY=a-hard-guessed-secret-key
 ```
 
--   Init sequelize & create database :
+-   Create database :
 
 ```bash
-npx sequelize init --force # create sequelize folders
-npx sequelize db:create # create database
-```
-
--   Overwrite `config/db.js` with following :
-
-```js
-const config = require("./settings")(env)["db"];
-module.exports = config;
-```
-
--   Update `app/models/index.js` with following :
-
-```diff
-- const config = require(__dirname + '/../../config/db.js')[env];
-+ const config = require(__dirname + "/../../config/settings.js")(env)["db"];
+npx sequelize-cli db:create # create database
 ```
 
 -   Run app :
