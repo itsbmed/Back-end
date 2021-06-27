@@ -8,3 +8,5 @@ package-lock.json
 app/migrations/*
 # ignore seeders of sequelize
 app/seeders/*
+# ignore public folder
+app/public/*
