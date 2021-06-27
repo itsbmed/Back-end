@@ -60,12 +60,15 @@ app.use(api_path, billRouter);
 app.use(api_path, analyticRouter);
 
 // handle 404 error
-app.use("*", (req, res, next) => {
-    try {
-        throw createError.NotFound(); // throw an error to the catch
-    } catch (err) {
-        next(err);
-    }
+app.use("*", async (req, res, next) => {
+    res.sendFile(
+        path.resolve(__dirname, "./public", req.originalUrl),
+        (err) => {
+            if (err) {
+                res.sendFile(path.resolve(__dirname, "./public/index.html"));
+            }
+        }
+    );
 });
 
 // error handler
